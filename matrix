@@ -1,0 +1,117 @@
+#include<iostream>
+using namespace std;
+class matrix
+{
+	int m, n;
+	float* data;
+public:
+
+	matrix(int M, int N)
+	{
+		set_mn(M, N);
+		data = new float[N*M];
+		for (int i(0); i < N*M; i++)
+		{
+			data[i] = i;
+		}
+	}
+	~matrix()
+	{
+		delete[] data;
+	}
+	float get_data(int i)
+	{
+		return data[i];
+	}
+	void set_mn(int M, int N)
+	{
+		m = M;
+		n = N;
+
+	}
+	matrix()
+	{
+		data = NULL;
+	}
+	int get_m()
+	{
+		return m;
+	}
+	int get_n()
+	{
+		return n;
+	}
+	matrix& operator= (const matrix& a)
+	{
+		n = a.n;
+		m = a.m;
+		delete data;
+		data = new float[n*m];
+		for (int i(0); i < n*m; i++)
+		{
+			data[i] = a.data[i];
+		}
+		matrix& c = *this;
+		return c;
+	}
+	matrix(int N, int M, float c)
+	{
+		set_mn(M, N);
+		data = new float[N*M];
+		for (int i(0); i < N*M; i++)
+		{
+			data[i] = c;
+		}
+	}
+	matrix& operator+ (const matrix& d)
+	{
+		matrix* a = new matrix(d.m, d.n);
+		if (n == d.n && m == d.m)
+		{
+			for (int i(0); i < d.m*d.n; i++)
+			{
+				a->data[i] = this->data[i] + d.data[i];
+			}
+		}
+		return *a;
+	}
+	matrix& transpose()
+	{
+		matrix* t = new matrix(n, m);
+		for (int i(0); i < n*m; i++)
+		{
+			t->data[i / n + (i%n)*n];
+		}
+		return *t;
+	}
+};
+int main()
+{
+	cout << "Hello world"<<endl;
+	int k, p;
+	cin >> k >> p;
+	matrix M(k, p,0);
+	matrix P(k, p,1);
+	matrix Q(k,p,0);
+	Q = M + P;
+	/*for (int i(0); i < k*p; i++)
+	{
+		if (i%k ==0)
+		{
+			cout << endl;
+		}
+		cout <<'\t'<< Q.get_data(i);
+	}*/
+	matrix J(k, p, 0);
+	J =( Q.transpose());
+	for (int i(0); i < k*p; i++)
+	{
+		if (i%k == 0)
+		{
+			cout << endl;
+		}
+		cout << '\t' << J.get_data(i);
+	}
+
+	return 0;
+}
