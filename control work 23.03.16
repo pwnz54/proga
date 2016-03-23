@@ -1,0 +1,89 @@
+#include<iostream>
+using namespace std;
+class Complex
+{
+	int* re;
+	int* im;
+	int n;
+public:
+	Complex()
+	{
+		re = NULL;
+		im = NULL;
+		n = 0;
+	}
+	Complex(int _n, int c)
+	{
+		n = _n;
+		re = new int[_n];
+		im = new int[_n];
+		for (int i(0); i < _n; i++)
+		{
+			re[i] = c;
+			im[i] = c;
+		}
+	}
+	ostream& print(ostream& o)
+	{
+		for (int i(0); i < n; i++)
+		{
+			o << re[i] << "  " <<"i"<< im[i] << endl;
+		}
+		return o;
+	}
+	int get_re(int i)
+	{
+		return re[i];
+	}
+	int get_im(int i)
+	{
+		return im[i];
+	}
+	Complex& operator + (Complex& t)
+	{
+		int sumRe = 0;
+		int sumIm = 0;
+		Complex* sum = new Complex(t.n, 0);
+
+		for (int i(0); i < t.n; i++)
+		{
+			sumRe = sumRe + this->re[i] + t.re[i];
+			sumIm = sumIm + this->im[i] + t.im[i];
+			sum->re[i] = sumRe;
+			sum->im[i] = sumIm;
+		}
+
+		return *sum;
+	}
+
+	Complex& operator* (Complex& t)
+	{
+		Complex* mult = new Complex(t.n, 0);
+		for (int i(0); i < t.n; i++)
+		{
+			mult->re[i] = this->re[i] * t.re[i] - this->im[i] * t.im[i];
+			mult->im[i] = this->re[i] * t.im[i] + this->im[i] * t.re[i];
+		}
+		return *mult;
+	}
+	Complex(Complex& T) // copy constructor
+
+	{
+		this->n = T.n;
+		this->re = new int[T.n];
+		this->im = new int[T.n];
+		for (int i(0); i < T.n; i++)
+		{
+			this->re[i] = T.re[i];
+			this->im[i] = T.im[i];
+		}
+	}
+};
+int main()
+{
+	Complex A(2, 0);
+	Complex B(2, 0);
+	Complex C(2, 0);
+	A = B*C;
+	A.print(cout);
+}
