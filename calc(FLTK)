@@ -1,0 +1,54 @@
+#include "fltkopt.h"
+#include <FL/Fl.H>
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Button.H>
+#include<FL/Fl_Input.H>
+#include<sstream>
+
+
+void Button_Func(Fl_Widget *w, void*)
+{
+	if(w->color() != FL_RED)
+	{
+		w->color(FL_RED);
+		return;
+	}
+
+	if(w->color() != FL_GREEN)
+	{
+		w->color(FL_GREEN);
+		return;
+	}
+}
+void b_callback(Fl_Widget* b, void* data)
+{
+	Fl_Input* i = (Fl_Input*)data;
+	i->value(b->label());
+}
+
+int main() 
+{
+	
+	Fl_Window* f = new Fl_Window(600, 800, "CALCULATOR");
+	Fl_Input * h = new Fl_Input(10, 10, 60, 20, NULL);
+	int n = 1;
+	for (int i(0); i < 3; i++)
+	{
+		for (int j(0); j < 3; j++)
+		{
+			char* c = new char[2];
+			c[0] = '0' + n++;
+			c[1] = '\0';
+			Fl_Button* b = new Fl_Button(j * 30, 30 + 30 * i, 20, 20, c);
+			b->callback(b_callback, (void*) h);
+		}
+
+	}
+	Fl_Button* b1 = new Fl_Button(120, 30, 20, 20, "+");
+	Fl_Button* b2 = new Fl_Button(140, 30, 20, 20, "-");
+	Fl_Button* b3 = new Fl_Button(160, 30, 20, 20, "*");
+
+	f->show();
+	return Fl::run();
+}
+
