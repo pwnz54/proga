@@ -1,0 +1,117 @@
+#include<iostream>
+using namespace std;
+class MyString
+{
+	char* data;
+	int l;
+public:
+	int len(char* str)
+	{
+		char ch;
+		int i = -1;
+		do
+		{
+			i++;
+			ch = str[i];
+		} while (ch != '\0');
+		return i;
+	}
+	MyString()
+	{
+		l = 0;
+		data = NULL;
+	}
+	MyString(int len)
+	{
+		l = len;
+		data = new char[len];
+		for (int i(0); i < l; i++)
+		{
+			data[i] = i;
+		}
+	}
+	~MyString()
+	{
+		delete data;
+	}
+	MyString(const MyString& A)
+	{
+	
+		this->l = A.l;
+		data = new char[A.l];
+		for (int i(0); i < l; i++)
+		{
+			this->data[i] = A.data[i];
+		}
+	}
+	//MyString operator+ (MyString& A)
+	//{
+	//	MyString res;
+	//	res.l = this->l + A.l;
+	//	res.data = new char[l];
+
+	//}
+	MyString& operator = (MyString& A)
+	{
+		delete data;
+		l = A.l;
+		data = new char[A.l];
+		for (int i(0); i < A.l; i++)
+		{
+			this->data[i] = A.data[i];
+		}
+		return (*this);
+	}
+	char get(int _i)
+	{
+		return data[_i];
+	}
+	ostream& print(ostream& o)
+	{
+		for (int i(0); i < this->l; i++)
+		{
+			o << this->data[i] << " ";
+		}
+		return o;
+	}
+	istream& read(istream& o)
+	{
+		int _l;
+		o >> _l;
+		this->l = _l;
+		this->data = new char[255];
+		for (int i(0); i < _l; i++)
+		{
+			o >> data[i];
+		}
+		return o;
+	}
+	MyString operator* (int c)
+	{
+		MyString tmp;
+		tmp.l = c*this->l;
+		tmp.data = new char[tmp.l];
+		for (int j(0); j < c; j++)
+		{
+			for (int i(0); i < this->l; i++)
+			{
+				tmp.data[i] = data[i];
+				
+			}
+		}
+		tmp.print(cout);
+		return MyString(tmp);
+		
+	}
+};
+int main()
+{
+	/*MyString M(10);
+	M.print(cout);*/
+	MyString S;
+	S.read(cin);
+	/*S.print(cout);*/
+	MyString M = S *3;
+	/*M.print(cout);*/
+	return 0;
+}
