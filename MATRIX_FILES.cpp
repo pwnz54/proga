@@ -252,15 +252,19 @@ int main()
 	/*Matrix M(100, 100);
 	for (int j(0); j < 100; j++)
 
-		for (int i(0); i < 100; i++)
-		{
-			M.set(i, j, i*8+j*2);
-		}
+	for (int i(0); i < 100; i++)
+	{
+	M.set(i, j, i*8+j*2);
+	}
 	ofstream file("MyMatrix.txt");
 	M.print(file);
 	file.close();*/
-	ifstream input ("Matr.txt");
-	Matrix M;
+	ifstream input("Matr.txt");
+	Matrix M, N;
 	M.read(input);
 	M.print(cout);
+	ofstream output("Matrix_Out.txt");
+	N = M.reverse();
+	N.print(output);
+	output.close();
 }
