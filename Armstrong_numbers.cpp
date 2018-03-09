@@ -27,14 +27,22 @@ int sum (int a)
 }
 int main()
 {
-    int a,b;
+    int a,b, count;
+    count = 0;
     cin >> a >> b;
+
     for (int i = a; i <= b; i++)
     {
         if(sum(i) == i)
-            cout << i << "\n";
+        {
+            cout << i << " ";
+            count++;
+        }
+
     }
-
-
-    
+    if(count == 0)
+    {
+        cout << -1;
+    }
+   
 }
